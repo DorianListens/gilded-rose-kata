@@ -15,6 +15,8 @@ class ItemUpdater
      return BackstageItemUpdater.new(item)
    when /Aged/.match(name)
      return AgedItemUpdater.new(item)
+   when /Conjured/.match(name)
+     return ConjuredItemUpdater.new(item)
    else
      return ItemUpdater.new(item)
    end 
@@ -114,15 +116,17 @@ class BackstageItemUpdater < ItemUpdater
   end
 
   def should_reduce_item_quality
-    if sell_in > 0
-      return false
-    else
-      return true
-    end
+    sell_in < 0
   end
 
   def amount_to_reduce_quality_by
     quality
+  end
+end
+
+class ConjuredItemUpdater < ItemUpdater
+  def amount_to_reduce_quality_by
+    super * 2
   end
 end
 # DO NOT CHANGE THINGS BELOW -----------------------------------------

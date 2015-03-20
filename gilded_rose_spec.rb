@@ -13,6 +13,7 @@ describe "Gilded Rose" do
   let(:brie) { Item.new("Aged Brie", 2, 0) }
   let(:sulfuras) { Item.new("Sulfuras, Hand of Ragnaros", 0, 80) }
   let(:passes) { Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 20) }
+  let(:cake) { Item.new("Conjured Mana Cake", 3, 6) }
 
   it 'Decrements item quality and sell in' do
     update_quality([vest])
@@ -76,4 +77,12 @@ describe "Gilded Rose" do
       expect(passes[:quality]).to eq 0
     end
   end
+  
+  describe "Conjoured items" do
+    it "degrades in quality twice as fast as regular items" do
+      update_quality([cake])
+      expect(cake.quality).to eq 4
+    end
+  end
+
 end
