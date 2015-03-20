@@ -105,14 +105,13 @@ end
 
 class BackstageItemUpdater < ItemUpdater
   def amount_to_increase_quality_by
-    amount = 1
-    if sell_in < 11
-      amount += 1
+    if (6..11).cover?(sell_in)
+      2
+    elsif sell_in < 6
+      3
+    else
+      1
     end
-    if sell_in < 6
-      amount += 1
-    end
-    amount
   end
 
   def should_reduce_item_quality
