@@ -52,18 +52,7 @@ class ItemUpdater
   end
 
   def should_reduce_item_quality
-    case
-    when name === 'Aged Brie' || name === 'Sulfuras, Hand of Ragnaros'
-      return false
-    when name === 'Backstage passes to a TAFKAL80ETC concert'
-      if sell_in > 0
-        return false
-      else
-        return true
-      end
-    else
-      return true
-    end
+    true
   end
 
   def reduce_item_quality
@@ -110,10 +99,23 @@ class ItemUpdater
 end
 
 class LegendaryItemUpdater < ItemUpdater
+  def should_reduce_item_quality
+    false
+  end
 end
 class AgedItemUpdater < ItemUpdater
+  def should_reduce_item_quality
+    false
+  end
 end
 class BackstageItemUpdater < ItemUpdater
+  def should_reduce_item_quality
+    if sell_in > 0
+      return false
+    else
+      return true
+    end
+  end
 end
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
