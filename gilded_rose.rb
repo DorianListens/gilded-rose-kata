@@ -66,21 +66,7 @@ class ItemUpdater
   end
 
   def amount_to_increase_quality_by
-    amount = 1
-    if name == 'Backstage passes to a TAFKAL80ETC concert'
-      if sell_in < 11
-        amount += 1
-      end
-      if sell_in < 6
-        amount += 1
-      end
-    end
-    if sell_in < 0
-      if name == "Aged Brie"
-       amount += 1
-      end
-    end
-    amount
+    1
   end
   
   def amount_to_reduce_quality_by
@@ -100,12 +86,33 @@ class LegendaryItemUpdater < ItemUpdater
     false
   end
 end
+
 class AgedItemUpdater < ItemUpdater
+  def amount_to_increase_quality_by
+    if sell_in < 0
+      2
+    else
+      1
+    end
+  end
+
   def should_reduce_item_quality
     false
   end
 end
+
 class BackstageItemUpdater < ItemUpdater
+  def amount_to_increase_quality_by
+    amount = 1
+    if sell_in < 11
+      amount += 1
+    end
+    if sell_in < 6
+      amount += 1
+    end
+    amount
+  end
+
   def should_reduce_item_quality
     if sell_in > 0
       return false
@@ -117,7 +124,6 @@ class BackstageItemUpdater < ItemUpdater
   def amount_to_reduce_quality_by
     quality
   end
-
 end
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
