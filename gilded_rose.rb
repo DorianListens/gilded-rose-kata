@@ -18,6 +18,11 @@ class ItemUpdater
     @item.sell_in = sell_in
   end
 
+  def update
+    update_sell_in
+    update_item_quality
+  end
+
   def should_reduce_item_quality
     case
     when name === 'Aged Brie' || name === 'Sulfuras, Hand of Ragnaros'
@@ -97,19 +102,10 @@ end
 
 def update_quality(items)
   items.each do |item|
-    updater = ItemUpdater.new(item)
-    update_sell_in(updater)
-    update_item_quality(updater)
+    ItemUpdater.new(item).update
   end
 end
 
-def update_item_quality(item)
-  item.update_item_quality
-end
-
-def update_sell_in(item)
-  item.update_sell_in
-end
 
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
