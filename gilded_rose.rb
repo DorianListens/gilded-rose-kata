@@ -4,12 +4,12 @@ def update_quality(items)
     update_item_quality(item)
   end
 end
-def do_update_quality(item)
-  if item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert'
-    if item.quality > 0
-      if item.name != 'Sulfuras, Hand of Ragnaros'
-        item.quality -= 1
-      end
+
+
+def update_item_quality(item)
+  if should_reduce_item_quality(item)
+    if item.name != 'Sulfuras, Hand of Ragnaros'
+      reduce_item_quality(item)
     end
   else
     if item.quality < 50
