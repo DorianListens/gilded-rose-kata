@@ -38,9 +38,7 @@ class ItemUpdater
   end
 
   def update_sell_in
-    if name != 'Sulfuras, Hand of Ragnaros'
-      @item.sell_in -= 1
-    end
+    @item.sell_in -= 1
   end
 
   def update_item_quality
@@ -89,16 +87,15 @@ class ItemUpdater
     if sell_in > 0
       1
     else
-      if name == "Backstage passes to a TAFKAL80ETC concert"
-        quality
-      else
-        2
-      end
+      2
     end
   end
 end
 
 class LegendaryItemUpdater < ItemUpdater
+  def update_sell_in
+  end
+
   def should_reduce_item_quality
     false
   end
@@ -116,6 +113,11 @@ class BackstageItemUpdater < ItemUpdater
       return true
     end
   end
+
+  def amount_to_reduce_quality_by
+    quality
+  end
+
 end
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
