@@ -1,5 +1,13 @@
+class ItemUpdater
+  def self.new(item)
+    @item = item
+  end
+end
+
+
 def update_quality(items)
   items.each do |item|
+    updater = ItemUpdater.new(item)
     update_sell_in(item)
     update_item_quality(item)
   end
@@ -32,7 +40,6 @@ def should_reduce_item_quality(item)
   else
     return true
   end
-
 end
 
 def reduce_item_quality(item)
