@@ -1,26 +1,7 @@
 def update_quality(items)
   items.each do |item|
-    do_update_quality(item)
-    if item.name != 'Sulfuras, Hand of Ragnaros'
-      item.sell_in -= 1
-    end
-    if item.sell_in < 0
-      if item.name != "Aged Brie"
-        if item.name != 'Backstage passes to a TAFKAL80ETC concert'
-          if item.quality > 0
-            if item.name != 'Sulfuras, Hand of Ragnaros'
-              item.quality -= 1
-            end
-          end
-        else
-          item.quality = item.quality - item.quality
-        end
-      else
-        if item.quality < 50
-          item.quality += 1
-        end
-      end
-    end
+    update_sell_in(item)
+    update_item_quality(item)
   end
 end
 def do_update_quality(item)
@@ -47,8 +28,40 @@ def do_update_quality(item)
       end
     end
   end
+  if item.sell_in < 0
+    if item.name != "Aged Brie"
+      if item.name != 'Backstage passes to a TAFKAL80ETC concert'
+        if item.quality > 0
+          if item.name != 'Sulfuras, Hand of Ragnaros'
+            item.quality -= 1
+          end
+        end
+      else
+        item.quality = item.quality - item.quality
+      end
+    else
+      if item.quality < 50
+        item.quality += 1
+      end
+    end
+  end
 end
 
+def update_sell_in(item)
+  if item.name != 'Sulfuras, Hand of Ragnaros'
+    item.sell_in -= 1
+  end
+end
+
+def should_reduce_item_quality(item)
+  item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert'
+end
+
+def reduce_item_quality(item)
+  if item.quality > 0
+    item.quality -= 1
+  end
+end
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
 Item = Struct.new(:name, :sell_in, :quality)
