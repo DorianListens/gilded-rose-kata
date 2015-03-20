@@ -1,17 +1,17 @@
-class InventoryItem
-  def self.create(item)
+class InventoryManager
+  def self.for(item)
     name = item.name
    case
    when /Sulfuras/.match(name)
-     return LegendaryInventoryItem.new(item)
+     return LegendaryInventoryManager.new(item)
    when /Backstage/.match(name)
-     return BackstageInventoryItem.new(item)
+     return BackstageInventoryManager.new(item)
    when /Aged/.match(name)
-     return AgedInventoryItem.new(item)
+     return AgedInventoryManager.new(item)
    when /Conjured/.match(name)
-     return ConjuredInventoryItem.new(item)
+     return ConjuredInventoryManager.new(item)
    else
-     return InventoryItem.new(item)
+     return InventoryManager.new(item)
    end 
   end
 
@@ -67,12 +67,12 @@ class InventoryItem
   end
 end
 
-class LegendaryInventoryItem < InventoryItem
+class LegendaryInventoryManager < InventoryManager
   def update
   end
 end
 
-class AgedInventoryItem < InventoryItem
+class AgedInventoryManager < InventoryManager
   def amount_to_increase_quality_by
     if @item.sell_in < 0
       2
@@ -86,7 +86,7 @@ class AgedInventoryItem < InventoryItem
   end
 end
 
-class BackstageInventoryItem < InventoryItem
+class BackstageInventoryManager < InventoryManager
   def amount_to_increase_quality_by
     amount = 1
     if @item.sell_in < 10
@@ -107,7 +107,7 @@ class BackstageInventoryItem < InventoryItem
   end
 end
 
-class ConjuredInventoryItem < InventoryItem
+class ConjuredInventoryManager < InventoryManager
   def amount_to_reduce_quality_by
     super * 2
   end

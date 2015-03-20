@@ -1,7 +1,7 @@
 require "inventory_item"
 def update_quality(items)
   items.each do |item|
-    InventoryItem.create(item).update
+    InventoryManager.for(item).update
   end
 end
 
