@@ -61,7 +61,15 @@ class ItemUpdater
     if sell_in > 0
       1
     else
-      amount_to_reduce_by_after_sell_in(self)
+      amount_to_reduce_by_after_sell_in
+    end
+  end
+
+  def amount_to_reduce_by_after_sell_in
+    if name == "Backstage passes to a TAFKAL80ETC concert"
+      quality
+    else
+      2
     end
   end
 end
@@ -102,11 +110,7 @@ def amount_to_reduce_by(item)
 end
 
 def amount_to_reduce_by_after_sell_in(item)
-  if item.name == "Backstage passes to a TAFKAL80ETC concert"
-    item.quality
-  else
-    2
-  end
+  item.amount_to_reduce_by_after_sell_in
 end
 
 def increase_item_quality(item)
