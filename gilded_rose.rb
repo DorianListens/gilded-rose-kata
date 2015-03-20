@@ -17,6 +17,7 @@ class ItemUpdater
   def sell_in=(sell_in)
     @item.sell_in = sell_in
   end
+
   def should_reduce_item_quality
     case
     when name === 'Aged Brie' || name === 'Sulfuras, Hand of Ragnaros'
@@ -31,10 +32,29 @@ class ItemUpdater
       return true
     end
   end
+
   def update_sell_in
     if name != 'Sulfuras, Hand of Ragnaros'
       @item.sell_in -= 1
     end
+  end
+
+  def amount_to_increase_quality_by
+    amount = 1
+    if name == 'Backstage passes to a TAFKAL80ETC concert'
+      if sell_in < 11
+        amount += 1
+      end
+      if sell_in < 6
+        amount += 1
+      end
+    end
+    if sell_in < 0
+      if name == "Aged Brie"
+       amount += 1
+      end
+    end
+    amount
   end
 end
 
@@ -92,21 +112,7 @@ def increase_item_quality(item)
 end
 
 def amount_to_increase_quality_by(item)
-  amount = 1
-  if item.name == 'Backstage passes to a TAFKAL80ETC concert'
-    if item.sell_in < 11
-      amount += 1
-    end
-    if item.sell_in < 6
-      amount += 1
-    end
-  end
-  if item.sell_in < 0
-    if item.name == "Aged Brie"
-     amount += 1
-    end
-  end
-  amount
+  item.amount_to_increase_quality_by
 end
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
