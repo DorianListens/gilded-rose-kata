@@ -56,6 +56,14 @@ class ItemUpdater
     end
     amount
   end
+  
+  def amount_to_reduce_by
+    if sell_in > 0
+      1
+    else
+      amount_to_reduce_by_after_sell_in(self)
+    end
+  end
 end
 
 
@@ -90,11 +98,7 @@ def reduce_item_quality(item)
 end
 
 def amount_to_reduce_by(item)
-  if item.sell_in > 0
-    1
-  else
-    amount_to_reduce_by_after_sell_in(item)
-  end
+  item.amount_to_reduce_by
 end
 
 def amount_to_reduce_by_after_sell_in(item)
