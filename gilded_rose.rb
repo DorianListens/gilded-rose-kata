@@ -4,7 +4,6 @@ def update_quality(items)
   end
 end
 
-
 class ItemUpdater
   def self.create(item)
     name = item.name
@@ -54,9 +53,11 @@ class ItemUpdater
   end
 
   def increase_item_quality
-    if @item.quality < 50
-      @item.quality += amount_to_increase_quality_by
+    new_quality = @item.quality += amount_to_increase_quality_by
+    if new_quality > 50
+      new_quality = 50
     end
+    @item.quality = new_quality
   end
 
   def amount_to_increase_quality_by
@@ -73,11 +74,7 @@ class ItemUpdater
 end
 
 class LegendaryItemUpdater < ItemUpdater
-  def update_sell_in
-  end
-
-  def should_reduce_item_quality
-    false
+  def update
   end
 end
 
@@ -97,13 +94,14 @@ end
 
 class BackstageItemUpdater < ItemUpdater
   def amount_to_increase_quality_by
-    if (6..11).cover?(@item.sell_in)
-      2
-    elsif @item.sell_in < 6
-      3
-    else
-      1
+    amount = 1
+    if @item.sell_in < 10
+      amount += 1
     end
+    if @item.sell_in < 5
+      amount += 1
+    end
+    amount
   end
 
   def should_reduce_item_quality
