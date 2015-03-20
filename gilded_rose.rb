@@ -1,6 +1,35 @@
 class ItemUpdater
-  def self.new(item)
+  def initialize(item)
     @item = item
+  end
+  def name
+    @item.name
+  end
+  def quality
+    @item.quality
+  end
+  def quality=(quality)
+    @item.quality = quality
+  end
+  def sell_in
+    @item.sell_in
+  end
+  def sell_in=(sell_in)
+    @item.sell_in = sell_in
+  end
+  def should_reduce_item_quality
+    case
+    when name === 'Aged Brie' || name === 'Sulfuras, Hand of Ragnaros'
+      return false
+    when name === 'Backstage passes to a TAFKAL80ETC concert'
+      if sell_in > 0
+        return false
+      else
+        return true
+      end
+    else
+      return true
+    end
   end
 end
 
@@ -8,8 +37,8 @@ end
 def update_quality(items)
   items.each do |item|
     updater = ItemUpdater.new(item)
-    update_sell_in(item)
-    update_item_quality(item)
+    update_sell_in(updater)
+    update_item_quality(updater)
   end
 end
 
@@ -28,18 +57,7 @@ def update_sell_in(item)
 end
 
 def should_reduce_item_quality(item)
-  case
-  when item.name == 'Aged Brie' || item.name == 'Sulfuras, Hand of Ragnaros'
-    return false
-  when item.name == 'Backstage passes to a TAFKAL80ETC concert'
-    if item.sell_in > 0
-      return false
-    else
-      return true
-    end
-  else
-    return true
-  end
+  item.should_reduce_item_quality
 end
 
 def reduce_item_quality(item)
@@ -81,7 +99,7 @@ def amount_to_increase_quality_by(item)
     end
   end
   if item.sell_in < 0
-    if item.name = "Aged Brie"
+    if item.name == "Aged Brie"
      amount += 1
     end
   end
