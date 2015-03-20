@@ -72,6 +72,26 @@ class ItemUpdater
       2
     end
   end
+
+  def reduce_item_quality
+    if quality > 0
+      @item.quality -= amount_to_reduce_by
+    end
+  end
+
+  def increase_item_quality
+    if quality < 50
+      @item.quality += amount_to_increase_quality_by
+    end
+  end
+
+  def update_item_quality
+    if should_reduce_item_quality
+      reduce_item_quality
+    else
+      increase_item_quality
+    end
+  end
 end
 
 
@@ -84,11 +104,7 @@ def update_quality(items)
 end
 
 def update_item_quality(item)
-  if should_reduce_item_quality(item)
-    reduce_item_quality(item)
-  else
-    increase_item_quality(item)
-  end
+  item.update_item_quality
 end
 
 def update_sell_in(item)
@@ -100,9 +116,7 @@ def should_reduce_item_quality(item)
 end
 
 def reduce_item_quality(item)
-  if item.quality > 0
-    item.quality -= amount_to_reduce_by(item)
-  end
+  item.reduce_item_quality
 end
 
 def amount_to_reduce_by(item)
@@ -114,9 +128,7 @@ def amount_to_reduce_by_after_sell_in(item)
 end
 
 def increase_item_quality(item)
-  if item.quality < 50
-    item.quality += amount_to_increase_quality_by(item)
-  end
+  item.increase_item_quality
 end
 
 def amount_to_increase_quality_by(item)
