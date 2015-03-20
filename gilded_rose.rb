@@ -1,4 +1,4 @@
-require "inventory_item"
+require "inventory_manager"
 def update_quality(items)
   items.each do |item|
     InventoryManager.for(item).update
