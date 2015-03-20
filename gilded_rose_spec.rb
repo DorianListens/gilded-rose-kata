@@ -83,6 +83,11 @@ describe "Gilded Rose" do
       update_quality([cake])
       expect(cake.quality).to eq 4
     end
-  end
 
+    it "even after the sell by date" do
+      cake.sell_in = 0
+      update_quality([cake])
+      expect(cake.quality).to eq 2
+    end
+  end
 end
