@@ -31,6 +31,11 @@ class ItemUpdater
       return true
     end
   end
+  def update_sell_in
+    if name != 'Sulfuras, Hand of Ragnaros'
+      @item.sell_in -= 1
+    end
+  end
 end
 
 
@@ -51,9 +56,7 @@ def update_item_quality(item)
 end
 
 def update_sell_in(item)
-  if item.name != 'Sulfuras, Hand of Ragnaros'
-    item.sell_in -= 1
-  end
+  item.update_sell_in
 end
 
 def should_reduce_item_quality(item)
