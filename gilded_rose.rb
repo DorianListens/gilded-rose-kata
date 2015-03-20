@@ -1,3 +1,9 @@
+def update_quality(items)
+  items.each do |item|
+    ItemUpdater.new(item).update
+  end
+end
+
 class ItemUpdater
   def initialize(item)
     @item = item
@@ -8,19 +14,27 @@ class ItemUpdater
   def quality
     @item.quality
   end
-  def quality=(quality)
-    @item.quality = quality
-  end
   def sell_in
     @item.sell_in
-  end
-  def sell_in=(sell_in)
-    @item.sell_in = sell_in
   end
 
   def update
     update_sell_in
     update_item_quality
+  end
+
+  def update_sell_in
+    if name != 'Sulfuras, Hand of Ragnaros'
+      @item.sell_in -= 1
+    end
+  end
+
+  def update_item_quality
+    if should_reduce_item_quality
+      reduce_item_quality
+    else
+      increase_item_quality
+    end
   end
 
   def should_reduce_item_quality
@@ -38,9 +52,15 @@ class ItemUpdater
     end
   end
 
-  def update_sell_in
-    if name != 'Sulfuras, Hand of Ragnaros'
-      @item.sell_in -= 1
+  def reduce_item_quality
+    if quality > 0
+      @item.quality -= amount_to_reduce_quality_by
+    end
+  end
+
+  def increase_item_quality
+    if quality < 50
+      @item.quality += amount_to_increase_quality_by
     end
   end
 
@@ -62,50 +82,19 @@ class ItemUpdater
     amount
   end
   
-  def amount_to_reduce_by
+  def amount_to_reduce_quality_by
     if sell_in > 0
       1
     else
-      amount_to_reduce_by_after_sell_in
+      if name == "Backstage passes to a TAFKAL80ETC concert"
+        quality
+      else
+        2
+      end
     end
   end
 
-  def amount_to_reduce_by_after_sell_in
-    if name == "Backstage passes to a TAFKAL80ETC concert"
-      quality
-    else
-      2
-    end
-  end
-
-  def reduce_item_quality
-    if quality > 0
-      @item.quality -= amount_to_reduce_by
-    end
-  end
-
-  def increase_item_quality
-    if quality < 50
-      @item.quality += amount_to_increase_quality_by
-    end
-  end
-
-  def update_item_quality
-    if should_reduce_item_quality
-      reduce_item_quality
-    else
-      increase_item_quality
-    end
-  end
 end
-
-
-def update_quality(items)
-  items.each do |item|
-    ItemUpdater.new(item).update
-  end
-end
-
 
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
