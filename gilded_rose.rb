@@ -11,14 +11,6 @@ def update_item_quality(item)
   else
     increase_item_quality(item)
   end
-  if item.sell_in < 0
-    if item.name != "Aged Brie"
-    else
-      if item.quality < 50
-        item.quality += 1
-      end
-    end
-  end
 end
 
 def update_sell_in(item)
@@ -70,14 +62,16 @@ def increase_item_quality(item)
     item.quality += 1
     if item.name == 'Backstage passes to a TAFKAL80ETC concert'
       if item.sell_in < 11
-        if item.quality < 50
-          item.quality += 1
-        end
+        item.quality += 1
       end
       if item.sell_in < 6
-        if item.quality < 50
-          item.quality += 1
-        end
+        item.quality += 1
+      end
+    end
+    if item.sell_in < 0
+      if item.name != "Aged Brie"
+      else
+        item.quality += 1
       end
     end
   end
