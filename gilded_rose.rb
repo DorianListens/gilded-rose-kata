@@ -21,17 +21,9 @@ class ItemUpdater
      return ItemUpdater.new(item)
    end 
   end
+
   def initialize(item)
     @item = item
-  end
-  def name
-    @item.name
-  end
-  def quality
-    @item.quality
-  end
-  def sell_in
-    @item.sell_in
   end
 
   def update
@@ -56,13 +48,13 @@ class ItemUpdater
   end
 
   def reduce_item_quality
-    if quality > 0
+    if @item.quality > 0
       @item.quality -= amount_to_reduce_quality_by
     end
   end
 
   def increase_item_quality
-    if quality < 50
+    if @item.quality < 50
       @item.quality += amount_to_increase_quality_by
     end
   end
@@ -72,7 +64,7 @@ class ItemUpdater
   end
   
   def amount_to_reduce_quality_by
-    if sell_in > 0
+    if @item.sell_in > 0
       1
     else
       2
@@ -91,7 +83,7 @@ end
 
 class AgedItemUpdater < ItemUpdater
   def amount_to_increase_quality_by
-    if sell_in < 0
+    if @item.sell_in < 0
       2
     else
       1
@@ -105,9 +97,9 @@ end
 
 class BackstageItemUpdater < ItemUpdater
   def amount_to_increase_quality_by
-    if (6..11).cover?(sell_in)
+    if (6..11).cover?(@item.sell_in)
       2
-    elsif sell_in < 6
+    elsif @item.sell_in < 6
       3
     else
       1
@@ -115,11 +107,11 @@ class BackstageItemUpdater < ItemUpdater
   end
 
   def should_reduce_item_quality
-    sell_in < 0
+    @item.sell_in < 0
   end
 
   def amount_to_reduce_quality_by
-    quality
+    @item.quality
   end
 end
 
