@@ -13,15 +13,6 @@ def update_item_quality(item)
   end
   if item.sell_in < 0
     if item.name != "Aged Brie"
-      if item.name != 'Backstage passes to a TAFKAL80ETC concert'
-        if item.quality > 0
-          if item.name != 'Sulfuras, Hand of Ragnaros'
-            item.quality -= 1
-          end
-        end
-      else
-        item.quality = item.quality - item.quality
-      end
     else
       if item.quality < 50
         item.quality += 1
@@ -37,13 +28,40 @@ def update_sell_in(item)
 end
 
 def should_reduce_item_quality(item)
-  item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert' && item.name != 'Sulfuras, Hand of Ragnaros'
+  case
+  when item.name == 'Aged Brie' || item.name == 'Sulfuras, Hand of Ragnaros'
+    return false
+  when item.name == 'Backstage passes to a TAFKAL80ETC concert'
+    if item.sell_in > 0
+      return false
+    else
+      return true
+    end
+  else
+    return true
+  end
 
 end
 
 def reduce_item_quality(item)
   if item.quality > 0
-    item.quality -= 1
+    item.quality -= amount_to_reduce_by(item)
+  end
+end
+
+def amount_to_reduce_by(item)
+  if item.sell_in > 0
+    1
+  else
+    amount_to_reduce_by_after_sell_in(item)
+  end
+end
+
+def amount_to_reduce_by_after_sell_in(item)
+  if item.name == "Backstage passes to a TAFKAL80ETC concert"
+    item.quality
+  else
+    2
   end
 end
 
