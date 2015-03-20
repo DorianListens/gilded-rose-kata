@@ -1,6 +1,5 @@
 require 'gilded_rose'
 describe "Gilded Rose" do
-  Item = Struct.new(:name, :sell_in, :quality)
   Items = [
     Item.new("+5 Dexterity Vest", 10, 20),
     Item.new("Aged Brie", 2, 0),
@@ -46,7 +45,9 @@ describe "Gilded Rose" do
   end
 
   it "does not decrease the sell in time or quality of Sulfuras" do
-    update_quality([sulfuras])
+    10.times do
+      update_quality([sulfuras])
+    end
     expect(sulfuras[:quality]).to eq 80
     expect(sulfuras[:sell_in]).to eq 0
   end
