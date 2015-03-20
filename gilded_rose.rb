@@ -1,10 +1,24 @@
 def update_quality(items)
   items.each do |item|
-    ItemUpdater.new(item).update
+    ItemUpdater.create(item).update
   end
 end
 
+
 class ItemUpdater
+  def self.create(item)
+    name = item.name
+   case
+   when /Sulfuras/.match(name)
+     return LegendaryItemUpdater.new(item)
+   when /Backstage/.match(name)
+     return BackstageItemUpdater.new(item)
+   when /Aged/.match(name)
+     return AgedItemUpdater.new(item)
+   else
+     return ItemUpdater.new(item)
+   end 
+  end
   def initialize(item)
     @item = item
   end
@@ -93,9 +107,14 @@ class ItemUpdater
       end
     end
   end
-
 end
 
+class LegendaryItemUpdater < ItemUpdater
+end
+class AgedItemUpdater < ItemUpdater
+end
+class BackstageItemUpdater < ItemUpdater
+end
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
 Item = Struct.new(:name, :sell_in, :quality)
