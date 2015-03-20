@@ -111,29 +111,6 @@ def update_sell_in(item)
   item.update_sell_in
 end
 
-def should_reduce_item_quality(item)
-  item.should_reduce_item_quality
-end
-
-def reduce_item_quality(item)
-  item.reduce_item_quality
-end
-
-def amount_to_reduce_by(item)
-  item.amount_to_reduce_by
-end
-
-def amount_to_reduce_by_after_sell_in(item)
-  item.amount_to_reduce_by_after_sell_in
-end
-
-def increase_item_quality(item)
-  item.increase_item_quality
-end
-
-def amount_to_increase_quality_by(item)
-  item.amount_to_increase_quality_by
-end
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
 Item = Struct.new(:name, :sell_in, :quality)
